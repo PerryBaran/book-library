@@ -15,27 +15,27 @@ module.exports = (connection, DataTypes) => {
           args: true,
           msg: 'The book title cannot be empty',
         },
-      }
+      },
     },
     ISBN: {
       type: DataTypes.STRING,
       unique: {
         args: true,
-        msg: 'ISBN must be unique'
+        msg: 'ISBN must be unique',
       },
       validate: {
         is: {
           args: ISBN_REGEX,
-          msg: 'ISBN must be of valid format'
-        }
-      }
+          msg: 'ISBN must be of valid format',
+        },
+      },
     },
   };
 
   const scope = {
     defaultScope: {
       attributes: { exclude: ['createdAt', 'updatedAt'] },
-    }
+    },
   };
 
   return connection.define('Book', schema, scope);

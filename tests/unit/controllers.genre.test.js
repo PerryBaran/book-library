@@ -6,8 +6,8 @@ describe('genre controller', () => {
   const req = {
     body: {},
     params: {
-      genreId: 0
-    }
+      genreId: 0,
+    },
   };
   const res = {};
 
@@ -24,8 +24,8 @@ describe('genre controller', () => {
 
         await genreController.create(req, res);
 
-        createMock.verify();        
-      } catch(err) {
+        createMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -40,8 +40,8 @@ describe('genre controller', () => {
 
         await genreController.readAll('', res);
 
-        readAllMock.verify();        
-      } catch(err) {
+        readAllMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -52,12 +52,15 @@ describe('genre controller', () => {
       try {
         const readByIdMock = sinon.mock(helpers);
 
-        readByIdMock.expects('readById').once().withArgs(req.params.genreId, res, 'genre');
+        readByIdMock
+          .expects('readById')
+          .once()
+          .withArgs(req.params.genreId, res, 'genre');
 
         await genreController.readById(req, res);
 
-        readByIdMock.verify();        
-      } catch(err) {
+        readByIdMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -68,12 +71,15 @@ describe('genre controller', () => {
       try {
         const updateMock = sinon.mock(helpers);
 
-        updateMock.expects('update').once().withArgs(req.body, req.params.genreId, res, 'genre');
+        updateMock
+          .expects('update')
+          .once()
+          .withArgs(req.body, req.params.genreId, res, 'genre');
 
         await genreController.update(req, res);
 
-        updateMock.verify();        
-      } catch(err) {
+        updateMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -84,12 +90,15 @@ describe('genre controller', () => {
       try {
         const deleteMock = sinon.mock(helpers);
 
-        deleteMock.expects('delete').once().withArgs(req.params.genreId, res, 'genre');
+        deleteMock
+          .expects('delete')
+          .once()
+          .withArgs(req.params.genreId, res, 'genre');
 
         await genreController.delete(req, res);
 
-        deleteMock.verify();        
-      } catch(err) {
+        deleteMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });

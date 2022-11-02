@@ -33,4 +33,4 @@ databases:
     plan: free
     region: frankfurt
     databaseName: book_library
-    ipAllowList: [] 
+    ipAllowList: []

@@ -6,8 +6,8 @@ describe('reader controller', () => {
   const req = {
     body: {},
     params: {
-      readerId: 0
-    }
+      readerId: 0,
+    },
   };
   const res = {};
 
@@ -24,8 +24,8 @@ describe('reader controller', () => {
 
         await readerController.create(req, res);
 
-        createMock.verify();        
-      } catch(err) {
+        createMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -40,8 +40,8 @@ describe('reader controller', () => {
 
         await readerController.readAll('', res);
 
-        readAllMock.verify();        
-      } catch(err) {
+        readAllMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -52,12 +52,15 @@ describe('reader controller', () => {
       try {
         const readByIdMock = sinon.mock(helpers);
 
-        readByIdMock.expects('readById').once().withArgs(req.params.readerId, res, 'reader');
+        readByIdMock
+          .expects('readById')
+          .once()
+          .withArgs(req.params.readerId, res, 'reader');
 
         await readerController.readById(req, res);
 
-        readByIdMock.verify();        
-      } catch(err) {
+        readByIdMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -68,12 +71,15 @@ describe('reader controller', () => {
       try {
         const updateMock = sinon.mock(helpers);
 
-        updateMock.expects('update').once().withArgs(req.body, req.params.readerId, res, 'reader');
+        updateMock
+          .expects('update')
+          .once()
+          .withArgs(req.body, req.params.readerId, res, 'reader');
 
         await readerController.update(req, res);
 
-        updateMock.verify();        
-      } catch(err) {
+        updateMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -84,12 +90,15 @@ describe('reader controller', () => {
       try {
         const deleteMock = sinon.mock(helpers);
 
-        deleteMock.expects('delete').once().withArgs(req.params.readerId, res, 'reader');
+        deleteMock
+          .expects('delete')
+          .once()
+          .withArgs(req.params.readerId, res, 'reader');
 
         await readerController.delete(req, res);
 
-        deleteMock.verify();        
-      } catch(err) {
+        deleteMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });

@@ -8,7 +8,7 @@ describe('authorFactory', () => {
     expect(typeof author).to.equal('string');
   });
 
-  it('returns passed data', () =>{
+  it('returns passed data', () => {
     const data = 'Author';
 
     const { author } = authorFactory(data);
@@ -16,7 +16,7 @@ describe('authorFactory', () => {
     expect(author).to.equal(data);
   });
 
-  it('works with empty string', () =>{
+  it('works with empty string', () => {
     const data = '';
 
     const { author } = authorFactory(data);
@@ -24,7 +24,7 @@ describe('authorFactory', () => {
     expect(author).to.equal(data);
   });
 
-  it('works with null', () =>{
+  it('works with null', () => {
     const data = null;
 
     const { author } = authorFactory(data);

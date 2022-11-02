@@ -5,44 +5,56 @@ const getModel = (model) => {
     book: Book,
     reader: Reader,
     author: Author,
-    genre: Genre
+    genre: Genre,
   };
 
   return models[model];
 };
 
 const getOptions = (model) => {
-  switch(model) {
-    case 'book': return { 
-      include: [
-        { model: Genre },
-        { model: Author }
-    ]};
-    case 'author': return { 
-      include: [{
-        model: Book,
-        include: [{
-          model: Genre
-        }]
-      }] 
-    };
-    case 'genre': return { 
-      include: [{
-        model: Book,
-        include: [{
-          model: Author
-        }]
-      }]
-    };
-    default: return {};
+  switch (model) {
+    case 'book':
+      return {
+        include: [{ model: Genre }, { model: Author }],
+      };
+    case 'author':
+      return {
+        include: [
+          {
+            model: Book,
+            include: [
+              {
+                model: Genre,
+              },
+            ],
+          },
+        ],
+      };
+    case 'genre':
+      return {
+        include: [
+          {
+            model: Book,
+            include: [
+              {
+                model: Author,
+              },
+            ],
+          },
+        ],
+      };
+    default:
+      return {};
   }
 };
 
-const errorMessage404 = (model) => { return { error: `The ${model} could not be found.` } };
+const errorMessage404 = (model) => {
+  return { error: `The ${model} could not be found.` };
+};
 
 const errorMessage500 = (err) => {
   if (Array.isArray(err.errors)) {
-    return { error: err.errors.map(e => e.message) };
+    return { error: err.errors.map((e) => e.message) };
   }
   return { error: err };
 };
@@ -96,7 +108,7 @@ exports.update = async (data, id, res, model) => {
   const Model = getModel(model);
 
   try {
-    const [ updatedRows ] = await Model.update(data, { where: { id } });
+    const [updatedRows] = await Model.update(data, { where: { id } });
     if (!updatedRows) {
       res.status(404).json(errorMessage404(model));
     } else {
@@ -111,7 +123,7 @@ exports.delete = async (id, res, model) => {
   const Model = getModel(model);
 
   try {
-    const deletedRows = await Model.destroy({where: { id } });
+    const deletedRows = await Model.destroy({ where: { id } });
 
     if (!deletedRows) {
       res.status(404).json(errorMessage404(model));

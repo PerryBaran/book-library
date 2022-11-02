@@ -20,7 +20,7 @@ exports.readAll = async (_, res) => {
 
 exports.readById = async (req, res) => {
   const { readerId } = req.params;
-  
+
   try {
     await helpers.readById(readerId, res, 'reader');
   } catch (err) {
@@ -29,7 +29,10 @@ exports.readById = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { body, params: { readerId } } = req;
+  const {
+    body,
+    params: { readerId },
+  } = req;
 
   try {
     await helpers.update(body, readerId, res, 'reader');

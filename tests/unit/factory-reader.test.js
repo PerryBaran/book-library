@@ -9,14 +9,14 @@ describe('readerFactory', () => {
     expect(typeof email).to.equal('string');
     expect(email).to.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/);
     expect(typeof password).to.equal('string');
-    expect(password.length).to.equal(8)
+    expect(password.length).to.equal(8);
   });
 
   it('returns passed data', () => {
     const data = {
       name: 'Name',
       email: 'email@email.com',
-      password: 'password'
+      password: 'password',
     };
 
     const { name, email, password } = readerFactory(data);
@@ -30,7 +30,7 @@ describe('readerFactory', () => {
     const data = {
       name: '',
       email: '',
-      password: ''
+      password: '',
     };
 
     const { name, email, password } = readerFactory(data);
@@ -44,7 +44,7 @@ describe('readerFactory', () => {
     const data = {
       name: null,
       email: null,
-      password: null
+      password: null,
     };
 
     const { name, email, password } = readerFactory(data);

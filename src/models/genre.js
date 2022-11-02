@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: {
         args: true,
-        msg: 'The genre must be unique'
+        msg: 'The genre must be unique',
       },
       allowNull: false,
       allowEmpty: false,
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: {
           args: true,
           msg: 'The genre cannot be empty',
-        }
+        },
       },
     },
   };
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   const scope = {
     defaultScope: {
       attributes: { exclude: ['createdAt', 'updatedAt'] },
-    }
+    },
   };
 
   return sequelize.define('Genre', schema, scope);

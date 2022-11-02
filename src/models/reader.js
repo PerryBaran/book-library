@@ -13,14 +13,14 @@ module.exports = (connection, DataTypes) => {
           args: true,
           msg: 'The name cannot be empty',
         },
-      }
+      },
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: {
         args: true,
-        msg: 'This email is already in use'
+        msg: 'This email is already in use',
       },
       validate: {
         notNull: {
@@ -29,9 +29,9 @@ module.exports = (connection, DataTypes) => {
         },
         isEmail: {
           args: true,
-          msg: 'Email must be valid'
-        }
-      }
+          msg: 'Email must be valid',
+        },
+      },
     },
     password: {
       type: DataTypes.STRING,
@@ -43,16 +43,16 @@ module.exports = (connection, DataTypes) => {
         },
         len: {
           args: [8],
-          msg: 'Password must be atleast 8 characters'
-        }
-      }
+          msg: 'Password must be atleast 8 characters',
+        },
+      },
     },
   };
 
   const scope = {
     defaultScope: {
       attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
-    }
+    },
   };
 
   return connection.define('Reader', schema, scope);

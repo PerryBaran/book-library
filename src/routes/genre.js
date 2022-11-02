@@ -3,11 +3,10 @@ const genreController = require('../controllers/genre');
 
 const router = express.Router();
 
-router.route('/')
-  .post(genreController.create)
-  .get(genreController.readAll);
+router.route('/').post(genreController.create).get(genreController.readAll);
 
-router.route('/:genreId')
+router
+  .route('/:genreId')
   .get(genreController.readById)
   .patch(genreController.update)
   .delete(genreController.delete);

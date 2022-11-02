@@ -4,7 +4,8 @@ const BookModel = require('./book');
 const AuthorModel = require('./author');
 const GenreModel = require('./genre');
 
-const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, NODE_ENV } = process.env;
+const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, NODE_ENV } =
+  process.env;
 
 const setupDatabase = () => {
   const connection = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
@@ -30,10 +31,10 @@ const setupDatabase = () => {
       validate: {
         notNull: {
           args: [true],
-          msg: 'Book must have an author'
-        }
-      }
-    }
+          msg: 'Book must have an author',
+        },
+      },
+    },
   });
   Book.belongsTo(Author);
 
@@ -42,7 +43,7 @@ const setupDatabase = () => {
     Reader,
     Book,
     Author,
-    Genre
+    Genre,
   };
 };
 

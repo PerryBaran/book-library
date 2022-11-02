@@ -1,7 +1,12 @@
 const { expect } = require('chai');
 const { Book, Author } = require('../../src/models');
 const { bookFactory, authorFactory } = require('../helpers/dataFactory');
-const { appPost, appGet, appPatch, appDelete } = require('../helpers/requestHelpers');
+const {
+  appPost,
+  appGet,
+  appPatch,
+  appDelete,
+} = require('../helpers/requestHelpers');
 
 describe('/books', () => {
   let author;
@@ -17,7 +22,7 @@ describe('/books', () => {
 
   beforeEach(async () => {
     try {
-      author = await Author.create(authorFactory());          
+      author = await Author.create(authorFactory());
     } catch (err) {
       throw new Error(err);
     }
@@ -45,7 +50,7 @@ describe('/books', () => {
           expect(status).to.equal(201);
           expect(body.title).to.equal(data.title);
           expect(newBookRecord.title).to.equal(data.title);
-          expect(newBookRecord.ISBN).to.equal(data.ISBN);          
+          expect(newBookRecord.ISBN).to.equal(data.ISBN);
         } catch (err) {
           throw new Error(err);
         }
@@ -58,7 +63,7 @@ describe('/books', () => {
             const { status, body } = await appPost('/books', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('Must provide a book title');          
+            expect(body.error[0]).to.equal('Must provide a book title');
           } catch (err) {
             throw new Error(err);
           }
@@ -66,11 +71,11 @@ describe('/books', () => {
 
         it('title cannot be empty', async () => {
           try {
-            const data = bookFactory({ title: '',  authorId: author.id });
+            const data = bookFactory({ title: '', authorId: author.id });
             const { status, body } = await appPost('/books', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('The book title cannot be empty');          
+            expect(body.error[0]).to.equal('The book title cannot be empty');
           } catch (err) {
             throw new Error(err);
           }
@@ -84,7 +89,7 @@ describe('/books', () => {
             const { status, body } = await appPost('/books', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('Book must have an author');          
+            expect(body.error[0]).to.equal('Book must have an author');
           } catch (err) {
             throw new Error(err);
           }
@@ -94,12 +99,15 @@ describe('/books', () => {
       describe('ISBN', () => {
         it('must be unique', async () => {
           try {
-            const data = bookFactory({ ISBN: '978-1-1234-1234-1', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '978-1-1234-1234-1',
+              authorId: author.id,
+            });
             await appPost('/books', data);
             const { status, body } = await appPost('/books', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('ISBN must be unique');          
+            expect(body.error[0]).to.equal('ISBN must be unique');
           } catch (err) {
             throw new Error(err);
           }
@@ -107,10 +115,13 @@ describe('/books', () => {
 
         it('can be valid ISBN13', async () => {
           try {
-            const data = bookFactory({ ISBN: '978-1-1234-1234-1', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '978-1-1234-1234-1',
+              authorId: author.id,
+            });
             const { status } = await appPost('/books', data);
 
-            expect(status).to.equal(201);          
+            expect(status).to.equal(201);
           } catch (err) {
             throw new Error(err);
           }
@@ -118,10 +129,13 @@ describe('/books', () => {
 
         it('can be valid ISBN10', async () => {
           try {
-            const data = bookFactory({ ISBN: '0-7960-0165-0', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '0-7960-0165-0',
+              authorId: author.id,
+            });
             const { status } = await appPost('/books', data);
 
-            expect(status).to.equal(201);          
+            expect(status).to.equal(201);
           } catch (err) {
             throw new Error(err);
           }
@@ -129,10 +143,13 @@ describe('/books', () => {
 
         it('can be ISBN13 without dashes', async () => {
           try {
-            const data = bookFactory({ ISBN: '9781123412341', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '9781123412341',
+              authorId: author.id,
+            });
             const { status } = await appPost('/books', data);
 
-            expect(status).to.equal(201);          
+            expect(status).to.equal(201);
           } catch (err) {
             throw new Error(err);
           }
@@ -140,10 +157,13 @@ describe('/books', () => {
 
         it('can be ISBN10 without dashes', async () => {
           try {
-            const data = bookFactory({ ISBN: '0796001650', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '0796001650',
+              authorId: author.id,
+            });
             const { status } = await appPost('/books', data);
 
-            expect(status).to.equal(201);          
+            expect(status).to.equal(201);
           } catch (err) {
             throw new Error(err);
           }
@@ -151,11 +171,14 @@ describe('/books', () => {
 
         it('cannot be a numeric string containing less than 10 numbers', async () => {
           try {
-            const data = bookFactory({ ISBN: '079600165', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '079600165',
+              authorId: author.id,
+            });
             const { status, body } = await appPost('/books', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('ISBN must be of valid format');          
+            expect(body.error[0]).to.equal('ISBN must be of valid format');
           } catch (err) {
             throw new Error(err);
           }
@@ -163,11 +186,14 @@ describe('/books', () => {
 
         it('cannot be a numeric string containing more than 13 numbers', async () => {
           try {
-            const data = bookFactory({ ISBN: '97811234123413', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '97811234123413',
+              authorId: author.id,
+            });
             const { status, body } = await appPost('/books', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('ISBN must be of valid format');          
+            expect(body.error[0]).to.equal('ISBN must be of valid format');
           } catch (err) {
             throw new Error(err);
           }
@@ -175,15 +201,27 @@ describe('/books', () => {
 
         it('cannot be a numeric string containing 11 or 12 numbers', async () => {
           try {
-            const data1 = bookFactory({ ISBN: '97845678901', authorId: author.id});
-            const data2 = bookFactory({ ISBN: '978456789012', authorId: author.id});
-            const { status: status11, body: body11 } = await appPost('/books', data1);
-            const { status: status12, body: body12 } = await appPost('/books', data2);
+            const data1 = bookFactory({
+              ISBN: '97845678901',
+              authorId: author.id,
+            });
+            const data2 = bookFactory({
+              ISBN: '978456789012',
+              authorId: author.id,
+            });
+            const { status: status11, body: body11 } = await appPost(
+              '/books',
+              data1
+            );
+            const { status: status12, body: body12 } = await appPost(
+              '/books',
+              data2
+            );
 
             expect(status11).to.equal(500);
             expect(body11.error[0]).to.equal('ISBN must be of valid format');
             expect(status12).to.equal(500);
-            expect(body12.error[0]).to.equal('ISBN must be of valid format');          
+            expect(body12.error[0]).to.equal('ISBN must be of valid format');
           } catch (err) {
             throw new Error(err);
           }
@@ -191,23 +229,29 @@ describe('/books', () => {
 
         it('cannot contain any non numeric characters', async () => {
           try {
-            const data = bookFactory({ ISBN: '978-1-1234-1a34-1', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '978-1-1234-1a34-1',
+              authorId: author.id,
+            });
             const { status, body } = await appPost('/books', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('ISBN must be of valid format');            
+            expect(body.error[0]).to.equal('ISBN must be of valid format');
           } catch (err) {
-            throw new Error(err)
+            throw new Error(err);
           }
         });
 
         it('cannot start with anything other than 978 or 979 for ISBN13', async () => {
           try {
-            const data = bookFactory({ ISBN: '976-1-1234-1434-1', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '976-1-1234-1434-1',
+              authorId: author.id,
+            });
             const { status, body } = await appPost('/books', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('ISBN must be of valid format');            
+            expect(body.error[0]).to.equal('ISBN must be of valid format');
           } catch (err) {
             throw new Error(err);
           }
@@ -215,11 +259,14 @@ describe('/books', () => {
 
         it('cannot contain more than 4 dashes', async () => {
           try {
-            const data = bookFactory({ ISBN: '978-1-1234-14-34-1', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '978-1-1234-14-34-1',
+              authorId: author.id,
+            });
             const { status, body } = await appPost('/books', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('ISBN must be of valid format');            
+            expect(body.error[0]).to.equal('ISBN must be of valid format');
           } catch (err) {
             throw new Error(err);
           }
@@ -227,11 +274,14 @@ describe('/books', () => {
 
         it('cannot contain less than 4 but more than 0 dashes', async () => {
           try {
-            const data = bookFactory({ ISBN: '978-1-123414-341', authorId: author.id});
+            const data = bookFactory({
+              ISBN: '978-1-123414-341',
+              authorId: author.id,
+            });
             const { status, body } = await appPost('/books', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('ISBN must be of valid format');            
+            expect(body.error[0]).to.equal('ISBN must be of valid format');
           } catch (err) {
             throw new Error(err);
           }
@@ -263,12 +313,12 @@ describe('/books', () => {
           expect(status).to.equal(200);
           expect(body.length).to.equal(3);
 
-          body.forEach(book => {
-            const expected = books.find(item => item.id === book.id);
+          body.forEach((book) => {
+            const expected = books.find((item) => item.id === book.id);
 
             expect(book.title).to.equal(expected.title);
             expect(book.ISBN).to.equal(expected.ISBN);
-          });            
+          });
         } catch (err) {
           throw new Error(err);
         }
@@ -284,7 +334,7 @@ describe('/books', () => {
           expect(status).to.equal(200);
           expect(body.title).to.equal(book.title);
           expect(body.genre).to.equal(book.genre);
-          expect(body.ISBN).to.equal(book.ISBN);            
+          expect(body.ISBN).to.equal(book.ISBN);
         } catch (err) {
           throw new Error(err);
         }
@@ -295,7 +345,7 @@ describe('/books', () => {
           const { status, body } = await appGet('/books/12345');
 
           expect(status).to.equal(404);
-          expect(body.error).to.equal('The book could not be found.');            
+          expect(body.error).to.equal('The book could not be found.');
         } catch (err) {
           throw new Error(err);
         }
@@ -313,7 +363,7 @@ describe('/books', () => {
           });
 
           expect(status).to.equal(200);
-          expect(updatedBookRecord.title).to.equal(data.title);            
+          expect(updatedBookRecord.title).to.equal(data.title);
         } catch (err) {
           throw new Error(err);
         }
@@ -325,7 +375,7 @@ describe('/books', () => {
           const { status, body } = await appPatch('/books/12345', data);
 
           expect(status).to.equal(404);
-          expect(body.error).to.equal('The book could not be found.');            
+          expect(body.error).to.equal('The book could not be found.');
         } catch (err) {
           throw new Error(err);
         }
@@ -340,7 +390,7 @@ describe('/books', () => {
           const deletedBook = await Book.findByPk(book.id, { raw: true });
 
           expect(status).to.equal(204);
-          expect(deletedBook).to.equal(null);            
+          expect(deletedBook).to.equal(null);
         } catch (err) {
           throw new Error(err);
         }
@@ -351,7 +401,7 @@ describe('/books', () => {
           const { status, body } = await appDelete('/books/12345');
 
           expect(status).to.equal(404);
-          expect(body.error).to.equal('The book could not be found.');            
+          expect(body.error).to.equal('The book could not be found.');
         } catch (err) {
           throw new Error(err);
         }

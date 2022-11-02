@@ -6,8 +6,8 @@ describe('book controller', () => {
   const req = {
     body: {},
     params: {
-      bookId: 0
-    }
+      bookId: 0,
+    },
   };
   const res = {};
 
@@ -24,8 +24,8 @@ describe('book controller', () => {
 
         await bookController.create(req, res);
 
-        createMock.verify();        
-      } catch(err) {
+        createMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -40,8 +40,8 @@ describe('book controller', () => {
 
         await bookController.readAll('', res);
 
-        readAllMock.verify();        
-      } catch(err) {
+        readAllMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -52,12 +52,15 @@ describe('book controller', () => {
       try {
         const readByIdMock = sinon.mock(helpers);
 
-        readByIdMock.expects('readById').once().withArgs(req.params.bookId, res, 'book');
+        readByIdMock
+          .expects('readById')
+          .once()
+          .withArgs(req.params.bookId, res, 'book');
 
         await bookController.readById(req, res);
 
-        readByIdMock.verify();        
-      } catch(err) {
+        readByIdMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -68,12 +71,15 @@ describe('book controller', () => {
       try {
         const updateMock = sinon.mock(helpers);
 
-        updateMock.expects('update').once().withArgs(req.body, req.params.bookId, res, 'book');
+        updateMock
+          .expects('update')
+          .once()
+          .withArgs(req.body, req.params.bookId, res, 'book');
 
         await bookController.update(req, res);
 
-        updateMock.verify();        
-      } catch(err) {
+        updateMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -84,12 +90,15 @@ describe('book controller', () => {
       try {
         const deleteMock = sinon.mock(helpers);
 
-        deleteMock.expects('delete').once().withArgs(req.params.bookId, res, 'book');
+        deleteMock
+          .expects('delete')
+          .once()
+          .withArgs(req.params.bookId, res, 'book');
 
         await bookController.delete(req, res);
 
-        deleteMock.verify();        
-      } catch(err) {
+        deleteMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });

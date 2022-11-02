@@ -1,7 +1,12 @@
 const { expect } = require('chai');
 const { Reader } = require('../../src/models');
 const { readerFactory } = require('../helpers/dataFactory');
-const { appPost, appGet, appPatch, appDelete } = require('../helpers/requestHelpers');
+const {
+  appPost,
+  appGet,
+  appPatch,
+  appDelete,
+} = require('../helpers/requestHelpers');
 
 describe('/readers', () => {
   before(async () => {
@@ -67,7 +72,7 @@ describe('/readers', () => {
           }
         });
       });
-      
+
       describe('email', () => {
         it('must contain an email', async () => {
           try {
@@ -83,7 +88,7 @@ describe('/readers', () => {
 
         it('email must be valid format', async () => {
           try {
-            const data = readerFactory({ email: 'fake' })
+            const data = readerFactory({ email: 'fake' });
             const { status, body } = await appPost('/readers', data);
 
             expect(status).to.equal(500);
@@ -98,7 +103,7 @@ describe('/readers', () => {
             const data = readerFactory({ email: 'valid@email.com' });
             await appPost('/readers', data);
             const { status, body } = await appPost('/readers', data);
-            
+
             expect(status).to.equal(500);
             expect(body.error[0]).to.equal('This email is already in use');
           } catch (err) {
@@ -122,11 +127,13 @@ describe('/readers', () => {
 
         it('password must atleast 8 characters long', async () => {
           try {
-            const data = readerFactory({password: '1234567'})
+            const data = readerFactory({ password: '1234567' });
             const { status, body } = await appPost('/readers', data);
 
             expect(status).to.equal(500);
-            expect(body.error[0]).to.equal('Password must be atleast 8 characters');
+            expect(body.error[0]).to.equal(
+              'Password must be atleast 8 characters'
+            );
           } catch (err) {
             throw new Error(err);
           }
@@ -158,8 +165,10 @@ describe('/readers', () => {
           expect(status).to.equal(200);
           expect(body.length).to.equal(readers.length);
 
-          body.forEach(reader => {
-            const expectedReader = readers.find(item => item.id === reader.id);
+          body.forEach((reader) => {
+            const expectedReader = readers.find(
+              (item) => item.id === reader.id
+            );
 
             expect(reader.name).to.equal(expectedReader.name);
             expect(reader.email).to.equal(expectedReader.email);
@@ -246,7 +255,7 @@ describe('/readers', () => {
       it('returns a 404 if the reader does not exist', async () => {
         try {
           const { status, body } = await appDelete('/readers/12345');
-          
+
           expect(status).to.equal(404);
           expect(body.error).to.equal('The reader could not be found.');
         } catch (err) {

@@ -6,8 +6,8 @@ describe('author controller', () => {
   const req = {
     body: {},
     params: {
-      authorId: 0
-    }
+      authorId: 0,
+    },
   };
   const res = {};
 
@@ -24,8 +24,8 @@ describe('author controller', () => {
 
         await authorController.create(req, res);
 
-        createMock.verify();        
-      } catch(err) {
+        createMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -40,8 +40,8 @@ describe('author controller', () => {
 
         await authorController.readAll('', res);
 
-        readAllMock.verify();        
-      } catch(err) {
+        readAllMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -52,12 +52,15 @@ describe('author controller', () => {
       try {
         const readByIdMock = sinon.mock(helpers);
 
-        readByIdMock.expects('readById').once().withArgs(req.params.authorId, res, 'author');
+        readByIdMock
+          .expects('readById')
+          .once()
+          .withArgs(req.params.authorId, res, 'author');
 
         await authorController.readById(req, res);
 
-        readByIdMock.verify();        
-      } catch(err) {
+        readByIdMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -68,12 +71,15 @@ describe('author controller', () => {
       try {
         const updateMock = sinon.mock(helpers);
 
-        updateMock.expects('update').once().withArgs(req.body, req.params.authorId, res, 'author');
+        updateMock
+          .expects('update')
+          .once()
+          .withArgs(req.body, req.params.authorId, res, 'author');
 
         await authorController.update(req, res);
 
-        updateMock.verify();        
-      } catch(err) {
+        updateMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });
@@ -82,14 +88,17 @@ describe('author controller', () => {
   describe('delete', () => {
     it('is called correctly', async () => {
       try {
-        const deleteMock = sinon.mock(helpers)
+        const deleteMock = sinon.mock(helpers);
 
-        deleteMock.expects('delete').once().withArgs(req.params.authorId, res, 'author')
+        deleteMock
+          .expects('delete')
+          .once()
+          .withArgs(req.params.authorId, res, 'author');
 
         await authorController.delete(req, res);
 
-        deleteMock.verify();        
-      } catch(err) {
+        deleteMock.verify();
+      } catch (err) {
         throw new Error(err);
       }
     });

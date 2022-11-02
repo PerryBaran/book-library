@@ -8,7 +8,7 @@ describe('genreFactory', () => {
     expect(typeof genre).to.equal('string');
   });
 
-  it('returns passed data', () =>{
+  it('returns passed data', () => {
     const data = 'Genre';
 
     const { genre } = genreFactory(data);
@@ -16,7 +16,7 @@ describe('genreFactory', () => {
     expect(genre).to.equal(data);
   });
 
-  it('works with empty string', () =>{
+  it('works with empty string', () => {
     const data = '';
 
     const { genre } = genreFactory(data);
@@ -24,7 +24,7 @@ describe('genreFactory', () => {
     expect(genre).to.equal(data);
   });
 
-  it('works with null', () =>{
+  it('works with null', () => {
     const data = null;
 
     const { genre } = genreFactory(data);

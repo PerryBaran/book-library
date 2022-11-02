@@ -14,12 +14,12 @@ describe('bookFactory', () => {
     expect(GenreId).to.equal(undefined);
   });
 
-  it('returns passed data', () =>{
+  it('returns passed data', () => {
     const data = {
       title: 'Title',
       ISBN: '1234567890123',
       authorId: 0,
-      genreId: 0
+      genreId: 0,
     };
 
     const { title, ISBN, AuthorId, GenreId } = bookFactory(data);
@@ -30,13 +30,13 @@ describe('bookFactory', () => {
     expect(GenreId).to.equal(data.genreId);
   });
 
-  it('works with empty strings', () =>{
+  it('works with empty strings', () => {
     const data = {
       title: '',
       author: '',
       ISBN: '',
       authorId: '',
-      genreId: ''
+      genreId: '',
     };
 
     const { title, ISBN, AuthorId, GenreId } = bookFactory(data);
@@ -44,16 +44,16 @@ describe('bookFactory', () => {
     expect(title).to.equal(data.title);
     expect(ISBN).to.equal(data.ISBN);
     expect(AuthorId).to.equal(data.authorId);
-    expect(GenreId).to.equal(data.genreId)
+    expect(GenreId).to.equal(data.genreId);
   });
 
-  it('works with null', () =>{
+  it('works with null', () => {
     const data = {
       title: null,
       author: null,
       ISBN: null,
       authorId: null,
-      genreId: null
+      genreId: null,
     };
 
     const { title, ISBN, AuthorId, GenreId } = bookFactory(data);
@@ -61,6 +61,6 @@ describe('bookFactory', () => {
     expect(title).to.equal(data.title);
     expect(ISBN).to.equal(data.ISBN);
     expect(AuthorId).to.equal(data.authorId);
-    expect(GenreId).to.equal(data.genreId)
+    expect(GenreId).to.equal(data.genreId);
   });
 });
